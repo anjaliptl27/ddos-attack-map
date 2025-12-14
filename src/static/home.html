@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDoS Monitor | Real-time Cyber Attack Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0e14 0%, #0d1117 100%);
+            color: #f0f6fc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #21262d;
+            color: #f0f6fc;
+        }
+        
+        .nav-links a.active {
+            background: #238636;
+            color: white;
+        }
+        
+        .login-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #2ea043;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 5% 100px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #4488ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #8b949e;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #f0f6fc;
+            border: 2px solid #30363d;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .secondary-btn:hover {
+            border-color: #4488ff;
+            background: rgba(68, 136, 255, 0.1);
+        }
+        
+        /* Live Stats */
+        .live-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 5%;
+        }
+        
+        .stat-card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #4488ff;
+        }
+        
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            color: #8b949e;
+            font-size: 1rem;
+        }
+        
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 0 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #f0f6fc;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            border-color: #4ecdc4;
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #f0f6fc;
+        }
+        
+        .feature-desc {
+            color: #8b949e;
+            line-height: 1.6;
+        }
+        
+        /* Globe Preview */
+        .globe-preview {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 0 5%;
+            text-align: center;
+        }
+        
+        .preview-container {
+            background: rgba(13, 17, 23, 0.8);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .preview-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0a0e14, #161b22);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(13, 17, 23, 0.95);
+            border-top: 1px solid #30363d;
+            padding: 60px 5% 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #f0f6fc;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #8b949e;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #f0f6fc;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding: 30px 0 0;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+            margin-top: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            DDoS Monitor
+        </div>
+        <div class="nav-links">
+            <a href="/" class="active">Home</a>
+            <a href="/globe">3D Globe</a>
+            <a href="/instructions">Instructions</a>
+            <a href="/about">About</a>
+        </div>
+        
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Real-time Global DDoS Attack Monitoring</h1>
+        <p>Visualize, analyze, and understand global DDoS attack patterns with our interactive 3D monitoring platform. Track cyber threats in real-time across the globe.</p>
+        
+        <div class="live-stats" id="liveStats">
+            <!-- Stats updated by JavaScript -->
+        </div>
+        
+        <div class="cta-buttons">
+            <button class="primary-btn" onclick="window.location.href='/globe'">
+                <i class="fas fa-globe-americas"></i> Launch 3D Globe
+            </button>
+
+            <button class="secondary-btn" onclick="window.location.href='/instructions'">
+                <i class="fas fa-book"></i> View Instructions
+            </button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Powerful Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3 class="feature-title">3D Visualization</h3>
+                <p class="feature-desc">Interactive 3D globe showing real-time DDoS attack patterns with animated arcs and visual effects.</p>
+            </div>
+            
+            
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="feature-title">Threat Intelligence</h3>
+                <p class="feature-desc">Comprehensive database of malicious IPs, attack patterns, and historical threat data.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Globe Preview -->
+    <section class="globe-preview">
+        <h2 class="section-title">Live Attack Visualization</h2>
+        <p style="color: #8b949e; margin-bottom: 30px; max-width: 800px; margin: 0 auto 30px;">
+            Watch DDoS attacks unfold in real-time on our interactive 3D globe. Each attack is visualized with animated arcs showing attack paths.
+        </p>
+        <div class="preview-container">
+            <div class="preview-image">
+                <div id="miniGlobe" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DDoS Monitor</h3>
+                <p style="color: #8b949e;">Real-time global DDoS attack monitoring and visualization platform.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/globe">3D Globe</a></li>
+                    
+                    <li><a href="/instructions">Instructions</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="/api-docs">API Documentation</a></li>
+                    <li><a href="/threat-intel">Threat Intelligence</a></li>
+                    <li><a href="/attack-history">Attack History</a></li>
+                    <li><a href="/config">Settings</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:support@ddosmonitor.com">support@ddosmonitor.com</a></li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 DDoS Monitor. All rights reserved. Real-time cyber threat monitoring system.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <i class="fas fa-sync-alt"></i> Last updated: <span id="lastUpdate">Just now</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Live stats data
+        const liveStats = [
+            { icon: 'fas fa-bolt', value: '1,248', label: 'Active Attacks', color: '#ff6b6b' },
+            { icon: 'fas fa-globe-europe', value: '42', label: 'Countries Affected', color: '#4ecdc4' },
+            { icon: 'fas fa-shield-alt', value: '98.5%', label: 'Detection Accuracy', color: '#4488ff' },
+            { icon: 'fas fa-clock', value: '0.2s', label: 'Update Speed', color: '#ffd166' }
+        ];
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLiveStats();
+            updateLiveData();
+            createMiniGlobe();
+            startLiveUpdates();
+        });
+        
+        function renderLiveStats() {
+            const container = document.getElementById('liveStats');
+            container.innerHTML = '';
+            
+            liveStats.forEach(stat => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                statCard.innerHTML = `
+                    <div class="stat-icon" style="color: ${stat.color};">
+                        <i class="${stat.icon}"></i>
+                    </div>
+                    <div class="stat-number">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                container.appendChild(statCard);
+            });
+        }
+        
+        function updateLiveData() {
+            // Simulate live data updates
+            setInterval(() => {
+                const randomAttacks = Math.floor(Math.random() * 200) + 1100;
+                const randomCountries = Math.floor(Math.random() * 10) + 35;
+                
+                // Update stats
+                document.querySelectorAll('.stat-number')[0].textContent = randomAttacks.toLocaleString();
+                document.querySelectorAll('.stat-number')[1].textContent = randomCountries;
+                
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('lastUpdate').textContent = 
+                    now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }, 5000);
+        }
+        
+        function createMiniGlobe() {
+            // Simple canvas-based mini globe
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 400;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            
+            const container = document.getElementById('miniGlobe');
+            container.innerHTML = '';
+            container.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Draw mini globe animation
+            function drawGlobe() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw globe background
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = Math.min(centerX, centerY) * 0.8;
+                
+                // Draw globe
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+                gradient.addColorStop(0, '#1a3a8f');
+                gradient.addColorStop(1, '#0a254e');
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                // Draw continents
+                ctx.fillStyle = '#2d5a27';
+                
+                // North America
+                ctx.beginPath();
+                ctx.ellipse(centerX - radius * 0.3, centerY - radius * 0.1, radius * 0.4, radius * 0.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // South America
+                ctx.beginPath();
+                ctx.ellipse(centerX - radius * 0.2, centerY + radius * 0.4, radius * 0.2, radius * 0.3, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Europe/Africa
+                ctx.beginPath();
+                ctx.ellipse(centerX + radius * 0.1, centerY, radius * 0.35, radius * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Asia
+                ctx.beginPath();
+                ctx.ellipse(centerX + radius * 0.4, centerY - radius * 0.1, radius * 0.5, radius * 0.4, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Australia
+                ctx.beginPath();
+                ctx.ellipse(centerX + radius * 0.6, centerY + radius * 0.3, radius * 0.15, radius * 0.2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw animated attack dots
+                const time = Date.now() / 1000;
+                
+                // North America to Europe
+                drawAttackArc(
+                    centerX - radius * 0.2, centerY - radius * 0.1,
+                    centerX + radius * 0.15, centerY + radius * 0.1,
+                    '#ff6b6b', time
+                );
+                
+                // Asia to North America
+                drawAttackArc(
+                    centerX + radius * 0.4, centerY - radius * 0.1,
+                    centerX - radius * 0.1, centerY,
+                    '#ff9f0a', time + 0.5
+                );
+                
+                // South America to Asia
+                drawAttackArc(
+                    centerX - radius * 0.1, centerY + radius * 0.4,
+                    centerX + radius * 0.5, centerY,
+                    '#4488ff', time + 1
+                );
+                
+                // Draw pulse effects
+                drawPulse(centerX - radius * 0.2, centerY - radius * 0.1, '#ff6b6b', time);
+                drawPulse(centerX + radius * 0.4, centerY - radius * 0.1, '#ff9f0a', time + 0.3);
+                drawPulse(centerX + radius * 0.15, centerY + radius * 0.1, '#4488ff', time + 0.6);
+            }
+            
+            function drawAttackArc(x1, y1, x2, y2, color, time) {
+                const progress = (time * 0.5) % 1;
+                
+                // Draw arc line
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.quadraticCurveTo(
+                    (x1 + x2) / 2,
+                    Math.min(y1, y2) - 50,
+                    x2, y2
+                );
+                ctx.strokeStyle = color + '40';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Draw moving particle
+                const t = progress;
+                const bx = x1 + (x2 - x1) * t;
+                const by = y1 + (y2 - y1) * t + 50 * Math.sin(t * Math.PI);
+                
+                ctx.beginPath();
+                ctx.arc(bx, by, 4, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+                
+                // Add glow
+                ctx.beginPath();
+                ctx.arc(bx, by, 8, 0, Math.PI * 2);
+                ctx.fillStyle = color + '40';
+                ctx.fill();
+            }
+            
+            function drawPulse(x, y, color, time) {
+                const pulse = Math.sin(time * 3) * 0.5 + 0.5;
+                const radius = 10 + pulse * 20;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = color + String(Math.floor(50 - pulse * 50));
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+            
+            // Animation loop
+            function animate() {
+                drawGlobe();
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        function startLiveUpdates() {
+            // Simulate WebSocket connection for live updates
+            setInterval(() => {
+                // Randomly update one stat
+                const statIndex = Math.floor(Math.random() * liveStats.length);
+                const statValue = document.querySelectorAll('.stat-number')[statIndex];
+                
+                if (statIndex === 0) {
+                    // Active attacks
+                    const current = parseInt(statValue.textContent.replace(/,/g, ''));
+                    const change = Math.floor(Math.random() * 20) - 10;
+                    const newValue = Math.max(1100, current + change);
+                    statValue.textContent = newValue.toLocaleString();
+                } else if (statIndex === 1) {
+                    // Countries affected
+                    const current = parseInt(statValue.textContent);
+                    const change = Math.floor(Math.random() * 3) - 1;
+                    const newValue = Math.max(35, Math.min(50, current + change));
+                    statValue.textContent = newValue;
+                }
+            }, 10000);
+        }
+    </script>
+</body>
+</html>

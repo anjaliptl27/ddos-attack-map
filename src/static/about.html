@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | DDoS Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #f0f6fc;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #4ecdc4, #4488ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #8b949e;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #21262d;
+            color: #f0f6fc;
+        }
+        
+        .nav-links a.active {
+            background: rgba(68, 136, 255, 0.1);
+            color: #4488ff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #4488ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #8b949e;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Mission Section */
+        .mission {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .mission h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #f0f6fc;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mission-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .mission-card {
+            padding: 20px;
+        }
+        
+        .mission-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+        }
+        
+        .mission-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #f0f6fc;
+        }
+        
+        .mission-card p {
+            color: #8b949e;
+            line-height: 1.6;
+        }
+        
+        /* Team Section */
+        .team {
+            margin-bottom: 60px;
+        }
+        
+        .team h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #f0f6fc;
+            text-align: center;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .team-member:hover {
+            border-color: #4488ff;
+            transform: translateY(-5px);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #4488ff, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+        
+        .member-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #f0f6fc;
+        }
+        
+        .member-role {
+            color: #4ecdc4;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .member-bio {
+            color: #8b949e;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #21262d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: #4488ff;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .stats h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #f0f6fc;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            color: #8b949e;
+            font-size: 1.1rem;
+        }
+        
+        /* Technology Stack */
+        .tech-stack {
+            margin-bottom: 60px;
+        }
+        
+        .tech-stack h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #f0f6fc;
+            text-align: center;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .tech-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .tech-item:hover {
+            border-color: #4488ff;
+            transform: translateY(-5px);
+        }
+        
+        .tech-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        
+        .tech-name {
+            color: #f0f6fc;
+            font-weight: 600;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .contact h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #f0f6fc;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(68, 136, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4488ff;
+            font-size: 20px;
+        }
+        
+        .contact-details h4 {
+            color: #f0f6fc;
+            margin-bottom: 5px;
+        }
+        
+        .contact-details p {
+            color: #8b949e;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: #8b949e;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #f0f6fc;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .team-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DDoS Monitor
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/globe">3D Globe</a>
+                <a href="/analytics">Analytics</a>
+                <a href="/instructions">Instructions</a>
+                <a href="/about" class="active">About</a>
+            </div>
+        </div>
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>About DDoS Monitor</h1>
+            <p>A cutting-edge cybersecurity platform that visualizes global DDoS attacks in real-time, providing security professionals with actionable intelligence and intuitive 3D visualization tools.</p>
+        </section>
+        
+        <!-- Mission Section -->
+        <section class="mission">
+            <h2>
+                <i class="fas fa-bullseye"></i>
+                Our Mission
+            </h2>
+            <div class="mission-content">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Visibility</h3>
+                    <p>Provide unprecedented visibility into global DDoS attack patterns through real-time 3D visualization and comprehensive analytics.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security</h3>
+                    <p>Empower organizations with actionable threat intelligence to better defend against and respond to DDoS attacks.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Education</h3>
+                    <p>Raise awareness about cyber threats and provide educational resources for security professionals and researchers.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats">
+            <h2>By The Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="attacksMonitored">200+</div>
+                    <div class="stat-label">Attacks Monitored</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" id="accuracyRate">98.5%</div>
+                    <div class="stat-label">Detection Accuracy</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" id="responseTime">0.2s</div>
+                    <div class="stat-label">Average Response Time</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" id="dataSources">12</div>
+                    <div class="stat-label">Data Sources</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number" id="uptime">99.9%</div>
+                    <div class="stat-label">System Uptime</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Technology Stack -->
+        <section class="tech-stack">
+            <h2>Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <div class="tech-name">JavaScript</div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="tech-name">Python</div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="tech-name">Three.js</div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="tech-name">FastAPI</div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="tech-name">SQLite</div>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="tech-name">Scikit-learn</div>
+                </div>
+                
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact">
+            <h2>
+                <i class="fas fa-envelope"></i>
+                Contact Us
+            </h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>contact@ddosmonitor.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>San Francisco, CA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Support Hours</h4>
+                            <p>24/7 Emergency Support</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <h3 style="color: #f0f6fc; margin-bottom: 20px;">Quick Links</h3>
+                    <ul style="list-style: none; color: #8b949e; line-height: 2;">
+                        <li><a href="/api-docs" style="color: #8b949e; text-decoration: none;">📚 API Documentation</a></li>
+                        <li><a href="/status" style="color: #8b949e; text-decoration: none;">📊 System Status</a></li>
+                        <li><a href="/report" style="color: #8b949e; text-decoration: none;">🚨 Report an Issue</a></li>
+                        <li><a href="/privacy" style="color: #8b949e; text-decoration: none;">🔒 Privacy Policy</a></li>
+                        <li><a href="/terms" style="color: #8b949e; text-decoration: none;">📝 Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 DDoS Monitor. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/security">Security</a>
+                <a href="/cookies">Cookies</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                Building a safer internet, one visualization at a time.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Animate statistics
+        document.addEventListener('DOMContentLoaded', function() {
+            animateStatistics();
+            updateLiveStats();
+        });
+        
+        function animateStatistics() {
+            const stats = {
+                attacksMonitored: 2400000,
+                countriesCovered: 195,
+                accuracyRate: 98.5,
+                responseTime: 0.2,
+                dataSources: 12,
+                uptime: 99.9
+            };
+            
+            Object.keys(stats).forEach(statId => {
+                const element = document.getElementById(statId);
+                const target = stats[statId];
+                const duration = 2000;
+                const steps = 60;
+                const stepValue = target / steps;
+                let current = 0;
+                let step = 0;
+                
+                const timer = setInterval(() => {
+                    current += stepValue;
+                    step++;
+                    
+                    if (step >= steps) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (statId.includes('Rate') || statId.includes('Time') || statId.includes('uptime')) {
+                        element.textContent = current.toFixed(1) + (statId.includes('Rate') || statId.includes('uptime') ? '%' : 's');
+                    } else if (statId === 'attacksMonitored') {
+                        element.textContent = Math.floor(current).toLocaleString() + '+';
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }, duration / steps);
+            });
+        }
+        
+        function updateLiveStats() {
+            // Simulate real-time updates
+            setInterval(() => {
+                const attacksElement = document.getElementById('attacksMonitored');
+                const currentAttacks = parseInt(attacksElement.textContent.replace(/[+,]/g, ''));
+                const newAttacks = currentAttacks + Math.floor(Math.random() * 1000);
+                attacksElement.textContent = newAttacks.toLocaleString() + '+';
+            }, 30000);
+        }
+        
+        // Add smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

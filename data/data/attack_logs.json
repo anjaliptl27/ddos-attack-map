@@ -1,0 +1,26 @@
+[
+    {
+        "ip": "103.27.202.45",
+        "magnitude": 6,
+        "metadata": {
+            "packet_rate": 900,
+            "duration": 40,
+            "unique_source_ips": 120,
+            "protocol_count": 4,
+            "avg_request_size": 850
+        },
+        "is_attack": 1
+    },
+    {
+        "ip": "192.168.1.20",
+        "magnitude": 1,
+        "metadata": {
+            "packet_rate": 5,
+            "duration": 2,
+            "unique_source_ips": 1,
+            "protocol_count": 1,
+            "avg_request_size": 300
+        },
+        "is_attack": 0
+    }
+]
